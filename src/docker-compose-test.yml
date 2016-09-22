@@ -1,0 +1,23 @@
+version: '2'
+services:
+  web:
+    build:
+      context: ./build-dir
+      args:
+      - olgatest-arg = success!
+    image: testapp:1
+
+    container_name: my-container
+
+    depends_on:
+          - tomee
+    environment:
+        - TEST_ENV=OLGA_test
+    links:
+         - db
+    ports:
+         - "18080:8080"
+  db:
+    image: opavlova/db-h2
+  tomee:
+    image: opavlova/tomee

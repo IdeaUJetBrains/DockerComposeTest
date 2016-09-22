@@ -1,0 +1,18 @@
+version: '2'
+services:
+  web:
+    build: ./build-dir
+    depends_on:
+          - tomee
+    links:
+         - db
+    ports:
+         - "18080:8080"
+  db:
+    image: opavlova/db-h2
+    ports:
+             - "18081:81"
+  tomee:
+    image: opavlova/tomee
+    ports:
+             - "28080:8080"

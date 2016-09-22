@@ -1,0 +1,34 @@
+version: '2'
+services:
+  web:
+    build:
+      context: ./build-dir
+      args:
+      - olgatest-arg = success!
+    image: testapp:1
+
+    cap_add:
+      - ALL
+
+    command: [bash]
+
+    cgroup_parent: my-cgroup_parent
+
+    container_name: my-container
+
+    depends_on:
+          - db
+    environment:
+        - TEST_ENV=OLGA_test
+    expose:
+        - "8080"
+    extends:
+        #file: common.yml
+        service: tomee
+    ports: "8080:8080"
+    volumes: ./build-dir:/testdir/:rw
+    working_dir: ./
+  db:
+    image: opavlova/db-h2
+  tomee:
+    image: opavlova/tomee
